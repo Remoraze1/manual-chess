@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harrison's Chess Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2b2b2b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        h1 {
+            margin: 20px 0;
+            font-size: 36px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .chess-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        table {
+            border: 5px solid #333;
+            border-collapse: collapse;
+        }
+        
+        td {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            font-size: 40px;
+            vertical-align: middle;
+            border: 2px solid #333;
+        }
+
+        .white {
+            background-color: #f0d9b5;
+        }
+
+        .black {
+            background-color: #b58863;
+        }
+
+        /* Hover effect for selecting and moving pieces */
+        td:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="chess-container">
+        <h1>Harrison's Chess Engine</h1>
+        <table id="chessboard"></table>
+    </div>
+
+    <script>
+        const board = document.getElementById('chessboard');
+        const pieces = [
+            ['♜','♞','♝','♛','♚','♝','♞','♜'],
+            ['♟','♟','♟','♟','♟','♟','♟','♟'],
+            ['','','','','','','',''],
+            ['','','','','','','',''],
+            ['','','','','','','',''],
+            ['','','','','','','',''],
+            ['♙','♙','♙','♙','♙','♙','♙','♙'],
+            ['♖','♘','♗','♕','♔','♗','♘','♖'],
+        ];
+
+        // Draw chessboard
+        for (let i = 0; i < 8; i++) {
+            let row = board.insertRow();
+            for (let j = 0; j < 8; j++) {
+                let cell = row.insertCell();
+                cell.classList.add((i + j) % 2 === 0 ? 'white' : 'black');
+                cell.innerHTML = pieces[i][j];
+            }
+        }
+
+        let selectedPiece = null;
+        board.addEventListener('click', function(event) {
+            const target = event.target;
+            if (target.tagName === 'TD') {
+                if (selectedPiece) {
+                    // Move piece to the selected square
+                    target.innerHTML = selectedPiece.innerHTML;
+                    selectedPiece.innerHTML = '';
+                    selectedPiece = null;
+                } else {
+                    // Select a piece to move
+                    if (target.innerHTML !== '') {
+                        selectedPiece = target;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
 
